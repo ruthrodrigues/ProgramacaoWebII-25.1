@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário</title>
+    <link rel="stylesheet" href="teste.css">
+</head>
+
+<body>
+    <div class="form-container">
+        <h1>Formulário</h1>
+        <form id="formCadastro">
+            <label for="matricula">Matrícula:</label>
+            <input type="text" id="matricula" name="matricula" required>
+            <span id="matriculaError" class="error-message"></span>
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" name="nome" required>
+            <span id="nomeError" class="error-message"></span>
+            <label for="cep">CEP:</label>
+            <input type="text" id="cep" name="cep" required placeholder="Digite o CEP" oninput="validarCEP()" onblur="buscarEndereco()" maxlength="8" pattern="\d*">
+            <span id="cepError" class="error-message"></span>
+            <label for="logradouro">Endereço:</label>
+            <input type="text" id="logradouro" name="logradouro" readonly>
+            <span id="logradouroError" class="error-message"></span>
+            <button type="button" onclick="validarFormulario()">OK</button>
+        </form>
+    </div>
+    
+    <script>
+        function validarCEP() {
+            document.getElementById('cep').value = document.getElementById('cep').value.replace(/\D/g, '').slice(0, 8);
+        }
+        function buscarEndereco() {
+            const cep = document.getElementById('cep').value;
+            if (cep.length === 8) {
+                fetch(`https://viacep.com.br/ws/${cep}/json/`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.erro) {
+                            document.getElementById('cepError').textContent = 'O CEP informado não foi encontrado';
+                            document.getElementById('logradouro').value = '';
+                        } else {
+                            document.getElementById('cepError').textContent = '';
+                            document.getElementById('logradouro').value = `${data.logradouro}, ${data.bairro}, ${data.localidade} - ${data.uf}`;
+                        }
+                    })
+                    .catch(() => console.error('Erro ao buscar CEP'));
+            }
+        }
+        function validarFormulario() {
+            let valid = true;
+            const campos = [
+                { id: 'matricula', minLength: 3, errorId: 'matriculaError', errorMessage: 'Sua matrícula deve ter pelo menos 3 caracteres' },
+                { id: 'nome', minLength: 3, errorId: 'nomeError', errorMessage: 'Seu nome deve ter pelo menos 3 caracteres' },
+                { id: 'cep', minLength: 8, errorId: 'cepError', errorMessage: 'O CEP deve ter exatamente 8 dígitos' },
+                { id: 'logradouro', minLength: 3, errorId: 'logradouroError', errorMessage: 'Endereço não encontrado ou incorreto' }
+            ];
+            campos.forEach(campo => {
+                const valor = document.getElementById(campo.id).value;
+                if (valor.length < campo.minLength) {
+                    document.getElementById(campo.errorId).textContent = campo.errorMessage;
+                    valid = false;
+                } else {
+                    document.getElementById(campo.errorId).textContent = '';
+                }
+            });
+            if (valid) {
+                alert('Seu formulário foi validado com sucesso');
+                document.getElementById('formCadastro').submit();
+            }
+        }
+    </script>
+</body>
+</html>
