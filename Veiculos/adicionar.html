@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Adicionar Veículo</title>
+</head>
+<body>
+
+<div id="wrapper">
+    <h1>Adicionar Veículo</h1>
+
+    <form id="form1">
+        <div class="form-group">
+            <label for="placa">Placa:</label>
+            <input type="text" id="placa" name="placa" required><br>
+        </div>
+
+        <div class="form-group">
+            <label for="marca">Marca:</label>
+            <input type="text" id="marca" name="marca" required><br>
+        </div>
+
+        <div class="form-group">
+            <label for="modelo">Modelo:</label>
+            <input type="text" id="modelo" name="modelo" required><br>
+        </div>
+
+        <div class="form-group">
+            <label for="ano_fabric">Ano de Fabricação:</label>
+            <input type="text" id="ano_fabric" name="ano_fabric" required><br>
+        </div>
+
+        <div class="form-group">
+            <label for="cor">Cor:</label>
+            <input type="text" id="cor" name="cor" required><br>
+        </div>
+
+        <input type="button" value="Salvar" onclick="enviar()">
+    </form>
+
+    <div id="teste1"></div>
+</div>
+
+<script>
+function enviar() {
+    var ajax = new XMLHttpRequest();
+    var form = document.getElementById('form1');
+    var formData = new FormData(form);
+
+    ajax.open("POST", "https://mauricio.inf.br/p6/api/add/", true);
+    ajax.send(formData);
+
+    ajax.onreadystatechange = function() {
+        if (ajax.readyState == 4 && ajax.status == 200) {
+            var data = ajax.responseText;
+            document.getElementById('teste1').innerHTML = data;
+
+            // Redirecionar para a página principal após adicionar o veículo
+            window.location.href = 'index.html';  // Aqui o redirecionamento
+        }
+    }
+}
+</script>
+
+</body>
+</html>
