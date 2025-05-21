@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Cadastro e Login</title>
+</head>
+<body>
+  <h1>Cadastro de Usuário</h1>
+  <form action="/listar" method="POST">
+    <label>E-mail:</label>
+    <input type="text" name="email" required><br>
+
+    <label>Senha:</label>
+    <input type="password" name="senha" required><br>
+
+    <label>Nível de Acesso (admin ou user):</label>
+    <input type="text" name="acessLevel" required><br>
+
+    <button type="submit">Cadastrar</button>
+  </form>
+
+  <hr>
+
+  <h1>Login</h1>
+  <form action="/login" method="POST">
+    <label>E-mail:</label>
+    <input type="text" name="email" required><br>
+
+    <label>Senha:</label>
+    <input type="password" name="senha" required><br>
+
+    <button type="submit">Entrar</button>
+  </form>
+
+  <hr>
+
+  {{#if mensagem}}
+    <p><strong>{{mensagem}}</strong></p>
+  {{/if}}
+
+  {{#if listagem}}
+    <h2>Lista de Usuários</h2>
+    <ul>
+      {{#each listagem}}
+        <li>{{this.email}} - {{this.acessLevel}}</li>
+      {{/each}}
+    </ul>
+  {{/if}}
+</body>
+</html>
