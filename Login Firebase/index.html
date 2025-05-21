@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Firebase Login</title>
+    <script src=https://www.gstatic.com/firebasejs/live/3.0/firebase.js></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 50px;
+        }
+        input {
+            margin-bottom: 10px;
+            display: block;
+        }
+        button {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Login com Firebase</h2>
+
+<label for="email">E-mail:</label>
+<input type="email" id="email" required>
+
+<label for="senha">Senha:</label>
+<input type="password" id="senha" required>
+
+<button onclick="cadastrar()">Cadastrar</button>
+<button onclick="login()">Entrar</button>
+
+<script>
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyDPYsqGFChcQX3M1cgUDU7Jiwr2KiCXlj0",
+  authDomain: "teste-3b53f.firebaseapp.com",
+  projectId: "teste-3b53f",
+  storageBucket: "teste-3b53f.firebasestorage.app",
+  messagingSenderId: "79043387601",
+  appId: "1:79043387601:web:6a93d4e598b7878f6fe5f0",
+  measurementId: "G-M48936JHQS"
+};
+  firebase.initializeApp(firebaseConfig);
+
+  function cadastrar() {
+    const email = document.getElementById("email").value;
+    const senha = document.getElementById("senha").value;
+
+    firebase.auth()
+      .createUserWithEmailAndPassword(email, senha)
+      .then((userCredential) => {
+        alert("Cadastrado com sucesso!");
+        console.log("Usuário:", userCredential.user);
+      })
+      .catch((error) => {
+        alert("Erro ao cadastrar: " + error.message);
+      });
+  }
+
+  function login() {
+    const email = document.getElementById("email").value;
+    const senha = document.getElementById("senha").value;
+
+    firebase.auth()
+      .signInWithEmailAndPassword(email, senha)
+      .then((userCredential) => {
+        alert("Logado com sucesso!");
+        console.log("Usuário:", userCredential.user);
+      })
+      .catch((error) => {
+        alert("Erro ao logar: " + error.message);
+      });
+  }
+</script>
+
+</body>
+</html>
