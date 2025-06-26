@@ -1,0 +1,8 @@
+<h2>Editar Material</h2>
+<form action="/atualizar/{{material.id}}" method="POST">
+    <label>Nome:</label>
+    <input type="text" name="nome" value="{{material.nome}}"><br>
+    <label>Descrição:</label>
+    <textarea name="descricao">{{material.descricao}}</textarea><br>
+    <button type="submit">Atualizar</button>
+</form>

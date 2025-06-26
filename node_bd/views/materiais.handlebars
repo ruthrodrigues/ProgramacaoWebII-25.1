@@ -1,0 +1,20 @@
+<h2>Lista de Materiais</h2>
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Descrição</th>
+        <th>Ações</th>
+    </tr>
+    {{#each materiais}}
+    <tr>
+        <td>{{id}}</td>
+        <td>{{nome}}</td>
+        <td>{{descricao}}</td>
+        <td>
+            <a href="/editar/{{id}}">Editar</a> |
+            <a href="/deletar/{{id}}">Excluir</a>
+        </td>
+    </tr>
+    {{/each}}
+</table>
